@@ -5,16 +5,10 @@ import { DefaultValues, FieldValues, Path, SubmitHandler, useForm } from "react-
 import { z, ZodType } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import ROUTES from "@/constants/routes";
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+import Link from "next/link";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;
