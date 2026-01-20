@@ -168,7 +168,7 @@
 }
 
 @utility h1-bold {
-  @apply text-[30px] leading-[42px] font-bold tracking-tighter;
+  @apply text-[30px] leading-10.5 font-bold tracking-tighter;
 }
 
 @utility h2-bold {
@@ -180,7 +180,7 @@
 }
 
 @utility h3-bold {
-  @apply text-[20px] leading-[26px] font-bold;
+  @apply text-[20px] leading-6.5 font-bold;
 }
 
 @utility h3-semibold {
@@ -240,11 +240,11 @@
 }
 
 @utility subtle-medium {
-  @apply text-[10px]! leading-[13px]! font-medium!;
+  @apply text-[10px]! leading-3.25! font-medium!;
 }
 
 @utility subtle-regular {
-  @apply text-[10px] leading-[13px] font-normal;
+  @apply text-[10px] leading-3.25 font-normal;
 }
 
 @utility placeholder {
@@ -316,11 +316,11 @@
 }
 
 @utility markdown {
-  @apply prose prose-p:my-2 prose-ol:my-0 prose-ul:my-0 dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500 !max-w-full;
+  @apply prose prose-p:my-2 prose-ol:my-0 prose-ul:my-0 dark:prose-p:text-light-700 dark:prose-ol:text-light-700 dark:prose-ul:text-light-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500 max-w-full!;
 }
 
 @utility markdown-editor {
-  @apply prose prose-p:m-0 dark:prose-headings:text-white prose-headings:text-dark-400 prose-p:text-dark-500 dark:prose-p:text-light-700 prose-ul:text-dark-500 dark:prose-ul:text-light-700 prose-ol:text-dark-500 dark:prose-ol:text-light-700 dark:prose-strong:text-white prose-blockquote:text-dark-500 dark:prose-blockquote:text-light-700 !max-w-full;
+  @apply prose prose-p:m-0 dark:prose-headings:text-white prose-headings:text-dark-400 prose-p:text-dark-500 dark:prose-p:text-light-700 prose-ul:text-dark-500 dark:prose-ul:text-light-700 prose-ol:text-dark-500 dark:prose-ol:text-light-700 dark:prose-strong:text-white prose-blockquote:text-dark-500 dark:prose-blockquote:text-light-700 max-w-full!;
 }
 
 @utility tab {
