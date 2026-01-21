@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "scripts/test-mongo.cjs"
   ],
   "exclude": ["node_modules"]
 }
