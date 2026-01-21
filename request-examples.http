@@ -1,9 +1,62 @@
-POST http://127.0.0.1:3000/api/users HTTP/1.1
-content-type: application/json
+### Variables (optional - you can define these at the top)
+@baseUrl = http://127.0.0.1:3000
+@contentType = application/json
+
+### Get all users
+GET {{baseUrl}}/api/users HTTP/1.1
+
+###
+
+### Create a new user
+POST {{baseUrl}}/api/users HTTP/1.1
+content-type: {{contentType}}
 
 {
     "name": "john doe",
     "username": "johndoe",
     "email": "john.doe@example.com"
-    
 }
+
+###
+
+### Create another user
+POST {{baseUrl}}/api/users HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "name": "jane smith",
+    "username": "janesmith",
+    "email": "jane.smith@example.com"
+}
+
+###
+
+### Get user by ID (replace with actual user ID from your database)
+GET {{baseUrl}}/api/users/6970f0c4c3a90d70a0712802 HTTP/1.1
+
+###
+
+### Get user by email
+POST {{baseUrl}}/api/users/email HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "email": "john.doe@example.com"
+}
+
+### Update user by ID
+PUT {{baseUrl}}/api/users/6970f0c4c3a90d70a0712802 HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "name": "john doe updated",
+    "username": "johndoeupdated",
+    "email": "john.doe.updated@example.com"
+}
+
+###
+
+### Delete user by ID
+DELETE {{baseUrl}}/api/users/6970f3c3c3a90d70a071280d HTTP/1.1
+
+###
