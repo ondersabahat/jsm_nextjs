@@ -8,6 +8,7 @@ import handleError from "@/lib/handlers/error";
 import { NotFoundError, ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 const questions = [
   {
@@ -64,9 +65,11 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
+  const session = await auth();
 
-  const users = await test();
-  console.log(users);
+  console.log('Session: ', session);
+
+
 
   const { query = "", filter = "" } = await searchParams;
 
