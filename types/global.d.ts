@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 interface Tag {
   _id: string;
   name: string;
@@ -14,9 +12,9 @@ interface Author {
 interface Question {
   _id: string;
   title: string;
-  description: string;
   tags: Tag[];
   author: Author;
+  createdAt: Date;
   upvotes: number;
   answers: number;
   views: number;
@@ -35,5 +33,6 @@ type ActionResponse<T = null> = {
 
 type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
 type ErrorResponse = ActionResponse<undefined> & { success: false };
+
 type APIErrorResponse = NextResponse<ErrorResponse>;
 type APIResponse<T = null> = NextResponse<SuccessResponse<T> | ErrorResponse>;

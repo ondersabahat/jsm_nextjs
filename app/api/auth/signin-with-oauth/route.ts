@@ -24,8 +24,7 @@ export async function POST(request: Request) {
       user,
     });
 
-    if (!validatedData.success)
-      throw new ValidationError(validatedData.error.flatten().fieldErrors);
+    if (!validatedData.success) throw new ValidationError(validatedData.error.flatten().fieldErrors);
 
     const { name, username, email, image } = user;
 
@@ -38,10 +37,7 @@ export async function POST(request: Request) {
     let existingUser = await User.findOne({ email }).session(session);
 
     if (!existingUser) {
-      [existingUser] = await User.create(
-        [{ name, username: slugifiedUsername, email, image }],
-        { session }
-      );
+      [existingUser] = await User.create([{ name, username: slugifiedUsername, email, image }], { session });
     } else {
       const updatedData: { name?: string; image?: string } = {};
 
@@ -49,10 +45,7 @@ export async function POST(request: Request) {
       if (existingUser.image !== image) updatedData.image = image;
 
       if (Object.keys(updatedData).length > 0) {
-        await User.updateOne(
-          { _id: existingUser._id },
-          { $set: updatedData }
-        ).session(session);
+        await User.updateOne({ _id: existingUser._id }, { $set: updatedData }).session(session);
       }
     }
 
@@ -82,7 +75,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
     await session.abortTransaction();
-    return handleError(error, "api") ;
+    return handleError(error, "api");
   } finally {
     session.endSession();
   }

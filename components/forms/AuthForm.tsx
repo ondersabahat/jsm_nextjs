@@ -9,29 +9,41 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import ROUTES from "@/constants/routes";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;
   defaultValues: T;
-  onSubmit: (data: T) => Promise<{ success: boolean }>;
+  onSubmit: (data: T) => Promise<ActionResponse>;
   formType: "SIGN_IN" | "SIGN_UP";
 }
 
 const AuthForm = <T extends FieldValues>({ schema, defaultValues, formType, onSubmit }: AuthFormProps<T>) => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof schema>>({
     resolver: standardSchemaResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async () => {
-    // TODO: authenticate user
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = (await onSubmit(data)) as ActionResponse;
+
+    if (result?.success) {
+      toast(formType === "SIGN_IN" ? "You have been signed in successfully" : "You have been signed up successfully");
+      router.push(ROUTES.HOME);
+    } else {
+      toast(result.error?.message || "An error occurred", {
+        description: result.status ? `Error: ${result.status}` : undefined,
+      });
+    }
   };
 
   const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign Up";
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="mt-10 space-y-6">
         {Object.keys(defaultValues).map((field) => (
           <FormField
             key={field}
@@ -64,7 +76,7 @@ const AuthForm = <T extends FieldValues>({ schema, defaultValues, formType, onSu
         </Button>
         {formType === "SIGN_IN" ? (
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link className="paragraph-semibold primary-text-gradient" href={ROUTES.SIGN_UP}>
               Sign Up
             </Link>

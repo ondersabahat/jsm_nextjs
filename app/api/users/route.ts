@@ -24,28 +24,27 @@ export async function POST(request: Request) {
 
     const validatedData = UserSchema.safeParse(body);
 
-    if(!validatedData.success) {
+    if (!validatedData.success) {
       throw new ValidationError(validatedData.error.flatten().fieldErrors);
     }
 
-    const {email, username} = validatedData.data;
+    const { email, username } = validatedData.data;
 
     const existingUser = await User.findOne({ email });
 
-    if(existingUser) {
+    if (existingUser) {
       throw new Error("User already exists");
     }
 
     const existingUsername = await User.findOne({ username });
 
-    if(existingUsername) {
+    if (existingUsername) {
       throw new Error("Username already exists");
     }
 
     const newUser = await User.create(validatedData.data);
 
     return NextResponse.json({ success: true, data: newUser }, { status: 201 });
-    
   } catch (error) {
     return handleError(error, "api");
   }

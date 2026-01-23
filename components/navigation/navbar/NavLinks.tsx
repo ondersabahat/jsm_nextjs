@@ -8,9 +8,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavLinks = ({ isMobileNav }: { isMobileNav?: boolean }) => {
+const NavLinks = ({ isMobileNav, userId }: { isMobileNav?: boolean; userId?: string }) => {
   const pathname = usePathname();
-  const userId = 1;
+
+  console.log(userId);
+
   return (
     <>
       {sidebarLinks.map((item) => {
