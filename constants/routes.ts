@@ -7,6 +7,9 @@ const ROUTES = {
   QUESTIONS: (id: string) => `/questions/${id}`,
   TAGS: (id: string) => `/tags/${id}`,
   SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
+  COLLECTION: "/collection",
+  JOBS: "/jobs",
+  COMMUNITY: "/community",
 };
 
 export default ROUTES;
