@@ -1,19 +1,44 @@
 import TagCard from "@/components/cards/TagCard";
+import AnswerForm from "@/components/forms/AnswerForm";
 import Preview from "@/components/editor/preview";
 import Metric from "@/components/Metrics";
 import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
-import { getQuestion } from "@/lib/actions/question.action";
+import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
+import { auth } from "@/auth";
+import { getAnswers } from "@/lib/actions/answer.action";
+import AllAnswers from "@/components/answers/AllAnswers";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
-
   const { data: question, success } = await getQuestion({ questionId: id });
 
+  after(async () => {
+    await incrementViews({ questionId: id });
+  });
+
+  // await incrementViews({ questionId: id });
+
   if (!success || !question) {
+    return redirect("/404");
+  }
+
+  const {
+    data: answersResult,
+    success: areAnswersLoaded,
+    error: answersError,
+  } = await getAnswers({
+    questionId: id,
+    page: 1,
+    pageSize: 10,
+    filter: "latest",
+  });
+
+  if (!areAnswersLoaded || !answersResult) {
     return redirect("/404");
   }
 
@@ -64,6 +89,20 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           <TagCard key={tag._id} _id={tag._id as string} name={tag.name} compact />
         ))}
       </div>
+
+      <section className="my-5">
+        <AllAnswers
+          data={answersResult?.answers}
+          success={areAnswersLoaded}
+          error={answersError}
+          totalAnswers={answersResult?.totalAnswers || 0}
+          isNext={answersResult?.isNext}
+        />
+      </section>
+
+      <section className="my-5">
+        <AnswerForm questionId={question._id} questionTitle={title} questionContent={content} />
+      </section>
     </>
   );
 };
