@@ -40,6 +40,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
           href={ROUTES.PROFILE(author._id)}
           textStyles="body-medium text-dark400_light700"
           isAuthor
+          titleStyles="max-sm:hidden"
         />
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
@@ -49,6 +50,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
             value={upvotes}
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
+            titleStyles="max-sm:hidden"
           />
           <Metric
             imgUrl="/icons/message.svg"
@@ -56,6 +58,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
             value={answers}
             title=" Answers"
             textStyles="small-medium text-dark400_light800"
+            titleStyles="max-sm:hidden"
           />
           <Metric
             imgUrl="/icons/eye.svg"
@@ -63,6 +66,7 @@ const QuestionCard = ({ question: { _id, title, tags, author, createdAt, upvotes
             value={views}
             title=" Views"
             textStyles="small-medium text-dark400_light800"
+            titleStyles="max-sm:hidden"
           />
         </div>
       </div>
