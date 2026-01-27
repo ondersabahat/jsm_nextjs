@@ -1,17 +1,19 @@
+import AllAnswers from "@/components/answers/AllAnswers";
 import TagCard from "@/components/cards/TagCard";
-import AnswerForm from "@/components/forms/AnswerForm";
 import Preview from "@/components/editor/preview";
+import AnswerForm from "@/components/forms/AnswerForm";
 import Metric from "@/components/Metrics";
 import UserAvatar from "@/components/UserAvatar";
+import Votes from "@/components/votes/Votes";
 import ROUTES from "@/constants/routes";
+import { getAnswers } from "@/lib/actions/answer.action";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
+import { hasVoted } from "@/lib/actions/vote.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
-import { auth } from "@/auth";
-import { getAnswers } from "@/lib/actions/answer.action";
-import AllAnswers from "@/components/answers/AllAnswers";
+import { Suspense } from "react";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -42,7 +44,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     return redirect("/404");
   }
 
-  const { author, createdAt, answers, views, tags, title, content } = question;
+  const hasVotedPromise = hasVoted({ targetId: question._id, targetType: "question" });
+
+  const { author, createdAt, answers, views, tags, title, content, upvotes, downvotes } = question;
 
   return (
     <>
@@ -55,7 +59,15 @@ const QuestionDetails = async ({ params }: RouteParams) => {
             </Link>
           </div>
           <div className="flex justify-end">
-            <p>Votes</p>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Votes
+                upvotes={upvotes}
+                downvotes={downvotes}
+                hasVotedPromise={hasVotedPromise}
+                targetId={question._id}
+                targetType="question"
+              />
+            </Suspense>
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full">{title}</h2>
@@ -96,7 +108,6 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           success={areAnswersLoaded}
           error={answersError}
           totalAnswers={answersResult?.totalAnswers || 0}
-          isNext={answersResult?.isNext}
         />
       </section>
 
