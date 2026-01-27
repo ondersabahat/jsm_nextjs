@@ -72,3 +72,9 @@ type User = {
   portfolio?: string;
   reputation?: number;
 };
+
+interface Collection {
+  _id: string;
+  author: string | User;
+  question: Question;
+}

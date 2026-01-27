@@ -3,7 +3,7 @@ import UserAvatar from "../UserAvatar";
 import Link from "next/link";
 import ROUTES from "@/constants/routes";
 
-const UserCard = ({ _id, name, username, image, bio, location, portfolio, reputation }: User) => (
+const UserCard = ({ _id, name, username, image }: User) => (
   <div className="shadow-light100_darknone xs:w-[230px] w-full">
     <article className="background-light900_dark200 light-border flex w-full flex-col items-center justify-center rounded-2xl border p-8">
       <UserAvatar
