@@ -49,3 +49,12 @@ export const EMPTY_COLLECTIONS = {
     href: ROUTES.COLLECTION,
   },
 };
+
+export const EMPTY_USERS = {
+  title: "No Users Found",
+  message: "The user list is empty. Maybe it’s waiting for some new faces to join the community",
+  button: {
+    text: "Add User",
+    href: ROUTES.HOME,
+  },
+};
