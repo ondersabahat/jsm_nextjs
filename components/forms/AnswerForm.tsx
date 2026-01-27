@@ -52,44 +52,48 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
         form.reset();
 
         toast.success("Answer created successfully");
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
         toast.error(result.error?.message || "An error occurred");
       }
     });
   };
 
-  //   const generateAIAnswer = async () => {
-  //     if (session.status !== "authenticated") {
-  //       toast.error("Please log in to use this feature");
-  //     }
+  const generateAIAnswer = async () => {
+    if (session.status !== "authenticated") {
+      toast.error("Please log in to use this feature");
+    }
 
-  //     setIsAISubmitting(true);
+    setIsAISubmitting(true);
 
-  //     const userAnswer = editorRef.current?.getMarkdown();
+    const userAnswer = editorRef.current?.getMarkdown();
 
-  //     try {
-  //       const { success, data, error } = await api?.ai.getAnswer(questionTitle, questionContent, userAnswer);
+    try {
+      const { success, data, error } = await api.ai.getAnswer(questionTitle, questionContent, userAnswer);
 
-  //       if (!success) {
-  //         toast.error(error?.message || "An error occurred");
-  //       }
+      if (!success) {
+        toast.error(error?.message || "An error occurred");
+      }
 
-  //       const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();
+      const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();
 
-  //       if (editorRef.current) {
-  //         editorRef.current.setMarkdown(formattedAnswer);
+      if (editorRef.current && formattedAnswer) {
+        editorRef.current.setMarkdown(formattedAnswer);
 
-  //         form.setValue("content", formattedAnswer);
-  //         form.trigger("content");
-  //       }
+        form.setValue("content", formattedAnswer);
+        form.trigger("content");
+      }
 
-  //       toast.success("AI generated answer has been generated");
-  //     } catch (error) {
-  //       toast.error(error instanceof Error ? error.message : "There was a problem with your request");
-  //     } finally {
-  //       setIsAISubmitting(false);
-  //     }
-  //   };
+      toast.success("AI generated answer has been generated");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "There was a problem with your request");
+    } finally {
+      setIsAISubmitting(false);
+    }
+  };
 
   return (
     <div>
@@ -98,7 +102,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
         <Button
           className="btn light-border-2 text-primary-500 dark:text-primary-500 gap-1.5 rounded-md border px-4 py-2.5 shadow-none"
           disabled={isAISubmitting}
-          //   onClick={generateAIAnswer}
+          onClick={generateAIAnswer}
         >
           {isAISubmitting ? (
             <>

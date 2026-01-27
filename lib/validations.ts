@@ -27,8 +27,7 @@ export const SignUpSchema = z.object({
       message: "Name can only contain letters and spaces.",
     }),
 
-  email: z
-    .email({ message: "Please provide a valid email address." }).min(1, { message: "Email is required." }),
+  email: z.email({ message: "Please provide a valid email address." }).min(1, { message: "Email is required." }),
 
   password: z
     .string()
@@ -253,5 +252,3 @@ export const GlobalSearchSchema = z.object({
   query: z.string(),
   type: z.string().nullable().optional(),
 });
-
-

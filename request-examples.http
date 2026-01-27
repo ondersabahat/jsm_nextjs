@@ -60,3 +60,14 @@ content-type: {{contentType}}
 DELETE {{baseUrl}}/api/users/6970f3c3c3a90d70a071280d HTTP/1.1
 
 ###
+
+### Generate AI answer
+POST {{baseUrl}}/api/ai/answers HTTP/1.1
+content-type: {{contentType}}
+
+{
+    "question": "What is the difference between SQL and NoSQL databases?",
+    "content": "SQL databases are relational databases that use structured query language (SQL) to manage data. NoSQL databases are non-relational databases that do not use SQL. SQL databases are table-based, while NoSQL databases are document-based, key-value pairs, or graph-based. SQL databases are vertically scalable, while NoSQL databases are horizontally scalable."
+}
+
+###
