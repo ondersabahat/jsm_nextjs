@@ -17,8 +17,9 @@ import { redirect } from "next/navigation";
 import { after } from "next/server";
 import { Suspense } from "react";
 
-const QuestionDetails = async ({ params }: RouteParams) => {
+const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
+  const { filter, page, pageSize } = await searchParams;
   const { data: question, success } = await getQuestion({ questionId: id });
 
   after(async () => {
@@ -37,9 +38,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     error: answersError,
   } = await getAnswers({
     questionId: id,
-    page: 1,
+    page: Number(page) || 1,
     pageSize: 10,
-    filter: "latest",
+    filter: filter || "latest",
   });
 
   if (!areAnswersLoaded || !answersResult) {
