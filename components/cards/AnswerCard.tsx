@@ -1,17 +1,33 @@
 import Link from "next/link";
 import UserAvatar from "../UserAvatar";
 import ROUTES from "@/constants/routes";
-import { getTimeStamp } from "@/lib/utils";
+import { cn, getTimeStamp } from "@/lib/utils";
 import Preview from "../editor/preview";
 import Votes from "../votes/Votes";
 import { Suspense } from "react";
 import { hasVoted } from "@/lib/actions/vote.action";
+import { ChevronRightIcon } from "lucide-react";
 
-const AnswerCard = ({ _id, content, author, createdAt, upvotes, downvotes }: Answer) => {
+interface Props extends Answer {
+  containerClasses?: string;
+  showReadMore?: boolean;
+}
+
+const AnswerCard = ({
+  _id,
+  content,
+  author,
+  createdAt,
+  upvotes,
+  downvotes,
+  question,
+  containerClasses,
+  showReadMore = false,
+}: Props) => {
   const hasVotedPromise = hasVoted({ targetId: _id, targetType: "answer" });
   return (
-    <article className="light-border border-b py-10">
-      <span id={JSON.stringify(_id)} className="hash-span" />
+    <article className={cn("light-border border-b py-10", containerClasses)}>
+      <span id={`answer-${_id}`} className="hash-span" />
       <div className="mb-5 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <div className="flex flex-1 items-start gap-1 sm:items-center">
           <UserAvatar
@@ -40,6 +56,14 @@ const AnswerCard = ({ _id, content, author, createdAt, upvotes, downvotes }: Ans
         </div>
       </div>
       <Preview content={content} />
+      {showReadMore && (
+        <Link
+          href={`/questions/${question}#answer-${_id}`}
+          className="body-semibold font-space-grotesk text-primary-500 relative z-10"
+        >
+          <p className="mt-1">Read more...</p>
+        </Link>
+      )}
     </article>
   );
 };

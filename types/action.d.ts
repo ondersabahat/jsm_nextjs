@@ -67,3 +67,19 @@ interface HasVotedResponse {
 interface CollectionBaseParams {
   questionId: string;
 }
+
+interface GetUsersParams {
+  userId: string;
+}
+
+interface GetUserQuestionsParams extends Omit<PaginatedSearchParams, "query" | "filter" | "sort"> {
+  userId: string;
+}
+
+interface GetUserAnswersParams extends PaginatedSearchParams {
+  userId: string;
+}
+
+interface GetUserTagsParams {
+  userId: string;
+}

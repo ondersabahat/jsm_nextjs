@@ -60,6 +60,7 @@ interface Answer {
   createdAt: Date;
   upvotes: number;
   downvotes: number;
+  question: string;
 }
 
 type User = {
@@ -78,4 +79,23 @@ interface Collection {
   _id: string;
   author: string | User;
   question: Question;
+}
+
+interface User {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  bio?: string;
+  image?: string;
+  location?: string;
+  portfolio?: string;
+  reputation?: number;
+  createdAt: Date;
+}
+
+interface BadgeCounts {
+  GOLD: number;
+  SILVER: number;
+  BRONZE: number;
 }

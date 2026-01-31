@@ -6,7 +6,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { UserFilters } from "@/constants/filters";
 import ROUTES from "@/constants/routes";
 import { EMPTY_USERS } from "@/constants/states";
-import { getUsers } from "@/lib/actions/user-action";
+import { getUsers } from "@/lib/actions/user.action";
 
 const CommunityPage = async ({ searchParams }: RouteParams) => {
   const { page, pageSize, query, filter } = await searchParams;
