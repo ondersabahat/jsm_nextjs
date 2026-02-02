@@ -11,6 +11,7 @@ const ROUTES = {
   COLLECTION: "/collection",
   JOBS: "/jobs",
   COMMUNITY: "/community",
+  EDIT: (id: string) => `/questions/${id}/edit`,
 };
 
 export default ROUTES;
