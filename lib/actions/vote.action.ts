@@ -9,6 +9,8 @@ import { revalidatePath } from "next/cache";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { CreateVoteSchema, HasVotedSchema, UpdateVoteCountSchema } from "../validations";
+import { createInteraction } from "./interaction.action";
+import { after } from "next/server";
 
 export async function updateVoteCount(params: UpdateVoteCountParams, session?: ClientSession): Promise<ActionResponse> {
   const validationResult = await action({
@@ -58,6 +60,11 @@ export async function createVote(params: CreateVoteParams): Promise<ActionRespon
 
   try {
     session.startTransaction();
+    const Model = targetType === "question" ? Question : Answer;
+    const contentDoc = await Model.findById(targetId).session(session);
+    if (!contentDoc) handleError(new Error("Content not found")) as ErrorResponse;
+
+    const contentAuthorId = contentDoc.author.toString();
 
     const existingVote = await Vote.findOne({
       author: userId,
@@ -78,6 +85,15 @@ export async function createVote(params: CreateVoteParams): Promise<ActionRespon
       await Vote.create([{ author: userId, actionId: targetId, actionType: targetType, voteType }], { session });
       await updateVoteCount({ targetId, targetType, voteType, change: 1 }, session);
     }
+
+    after(async () => {
+      await createInteraction({
+        action: voteType,
+        actionTarget: targetType,
+        actionId: targetId,
+        authorId: contentAuthorId,
+      });
+    });
 
     await session.commitTransaction();
 

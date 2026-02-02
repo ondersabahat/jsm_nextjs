@@ -9,6 +9,8 @@ import { NotFoundError, UnauthorizedError } from "../http-errors";
 import { Question, Vote } from "@/database";
 import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/routes";
+import { createInteraction } from "./interaction.action";
+import { after } from "next/server";
 
 export async function createAnswer(params: CreateAnswerParams): Promise<ActionResponse<IAnswerDoc>> {
   const validationResult = await action({
@@ -52,6 +54,15 @@ export async function createAnswer(params: CreateAnswerParams): Promise<ActionRe
 
     question.answers += 1;
     await question.save({ session });
+
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionTarget: "answer",
+        actionId: newAnswer._id.toString(),
+        authorId: userId as string,
+      });
+    });
 
     await session.commitTransaction();
     revalidatePath(ROUTES.QUESTIONS(questionId));
