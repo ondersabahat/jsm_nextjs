@@ -44,7 +44,7 @@ const CollectionPage = async ({ searchParams }: RouteParams) => {
         <CommonFilter filters={CollectionFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </div>
 
-      <DataRenderer
+      <DataRenderer<Collection>
         success={success}
         error={error}
         data={collection}

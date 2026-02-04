@@ -44,7 +44,7 @@ const Home = async ({ searchParams }: SearchParams) => {
         />
       </section>
       <HomeFilter />
-      <DataRenderer
+      <DataRenderer<Question>
         success={success}
         data={questions}
         error={error}

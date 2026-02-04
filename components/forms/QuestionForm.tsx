@@ -63,7 +63,7 @@ const QuestionForm = ({ question, isEdit = false }: { question?: Question; isEdi
         const result = await editQuestion({ questionId: question?._id, ...data });
         if (result.success) {
           toast.success("Question updated successfully");
-          if (result.data) router.push(ROUTES.QUESTIONS(result.data?._id));
+          if (result.data) router.push(ROUTES.QUESTIONS(result.data._id.toString()));
         } else {
           toast.error(result.error?.message || "Failed to update question");
         }

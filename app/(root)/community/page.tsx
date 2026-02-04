@@ -32,7 +32,7 @@ const CommunityPage = async ({ searchParams }: RouteParams) => {
         />
         <CommonFilter filters={UserFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </div>
-      <DataRenderer
+      <DataRenderer<User>
         success={success}
         error={error}
         data={users}

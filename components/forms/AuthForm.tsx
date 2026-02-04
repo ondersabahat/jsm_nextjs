@@ -21,7 +21,8 @@ interface AuthFormProps<T extends FieldValues> {
 
 const AuthForm = <T extends FieldValues>({ schema, defaultValues, formType, onSubmit }: AuthFormProps<T>) => {
   const router = useRouter();
-  const form = useForm<z.infer<typeof schema>>({
+  const form = useForm<T>({
+    // @ts-expect-error - standardSchemaResolver type inference issue with generics
     resolver: standardSchemaResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
@@ -43,10 +44,12 @@ const AuthForm = <T extends FieldValues>({ schema, defaultValues, formType, onSu
 
   return (
     <Form {...form}>
+      {/* @ts-expect-error - handleSubmit type inference issue with generics */}
       <form onSubmit={form.handleSubmit(handleSubmit)} className="mt-10 space-y-6">
         {Object.keys(defaultValues).map((field) => (
           <FormField
             key={field}
+            // @ts-expect-error - FormField control type inference issue with generics
             control={form.control}
             name={field as Path<T>}
             render={({ field }) => (

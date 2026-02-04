@@ -74,8 +74,9 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
     try {
       const { success, data, error } = await api.ai.getAnswer(questionTitle, questionContent, userAnswer);
 
-      if (!success) {
+      if (!success || !data) {
         toast.error(error?.message || "An error occurred");
+        return;
       }
 
       const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();

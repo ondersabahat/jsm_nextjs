@@ -34,7 +34,7 @@ const Tags = async ({ searchParams }: RouteParams) => {
         <CommonFilter filters={TagFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </section>
 
-      <DataRenderer
+      <DataRenderer<Tag>
         success={success}
         error={error}
         data={tags}

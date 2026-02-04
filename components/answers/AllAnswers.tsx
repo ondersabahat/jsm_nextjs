@@ -4,6 +4,7 @@ import AnswerCard from "../cards/AnswerCard";
 import DataRenderer from "../DataRenderer";
 import CommonFilter from "../filters/CommonFilter";
 import Pagination from "../Pagination";
+import { ActionResponse } from "@/types/global";
 
 interface Props extends ActionResponse<Answer[]> {
   totalAnswers: number;
@@ -20,7 +21,7 @@ const AllAnswers = ({ data, success, error, totalAnswers, page, isNext }: Props)
         </h3>
         <CommonFilter filters={AnswerFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </div>
-      <DataRenderer
+      <DataRenderer<Answer>
         data={data}
         success={success}
         error={error}

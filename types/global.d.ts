@@ -17,6 +17,25 @@ export type APIErrorResponse = NextResponse<ErrorResponse>;
 export type APIResponse<T = null> = NextResponse<SuccessResponse<T> | ErrorResponse>;
 
 declare global {
+  // Make ActionResponse and ErrorResponse available globally
+  type ActionResponse<T = null> = {
+    success: boolean;
+    data?: T;
+    error?: {
+      message: string;
+      details?: Record<string, string[]>;
+    };
+    status?: number;
+  };
+
+  type ErrorResponse = ActionResponse<undefined> & { success: false };
+  type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
+  
+  type BadgeCounts = {
+    GOLD: number;
+    SILVER: number;
+    BRONZE: number;
+  };
   interface Tag {
     _id: string;
     name: string;

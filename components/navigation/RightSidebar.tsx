@@ -18,7 +18,7 @@ const RightSidebar = async () => {
       <div>
         <h3 className="h3-bold text-dark200_light900">Top Questions</h3>
 
-        <DataRenderer
+        <DataRenderer<Question>
           data={hotQuestions}
           empty={{
             title: "No questions found",
@@ -51,7 +51,7 @@ const RightSidebar = async () => {
       </div>
       <div className="mt-16">
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
-        <DataRenderer
+        <DataRenderer<Tag>
           data={tags}
           empty={{
             title: "No tags found",
@@ -61,7 +61,7 @@ const RightSidebar = async () => {
           error={tagsError}
           render={(tags) => (
             <div className="mt-7 flex flex-col gap-4">
-              {tags.map(({ _id, name, questions }: Tag) => (
+              {tags.map(({ _id, name, questions }) => (
                 <TagCard key={_id} _id={_id} name={name} compact showCount questions={questions} />
               ))}
             </div>

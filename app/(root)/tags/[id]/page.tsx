@@ -35,7 +35,7 @@ const TagDetailsPage = async ({ params, searchParams }: RouteParams) => {
         />
         <CommonFilter filters={HomePageFilters} otherClasses="min-h-[56px] sm:min-w-[170px]" />
       </section>
-      <DataRenderer
+      <DataRenderer<Question>
         success={success}
         data={questions}
         error={error}

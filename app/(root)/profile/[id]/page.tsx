@@ -111,7 +111,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts" className="mt-5 flex w-full flex-col gap-6">
-            <DataRenderer
+            <DataRenderer<Question>
               data={questions}
               empty={EMPTY_QUESTION}
               success={userQuestionsSuccess}
@@ -131,7 +131,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
             <Pagination page={page} isNext={hasMoreQuestions} />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            <DataRenderer
+            <DataRenderer<Answer>
               data={answers}
               empty={EMPTY_ANSWERS}
               success={userAnswersSuccess}
@@ -158,7 +158,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
         <div className="flex w-full min-w-[250px] flex-1 flex-col max-lg:hidden">
           <h3 className="h3-bold text-dark200_light900">Top Tech</h3>
           <div className="mt-7 flex flex-col gap-4">
-            <DataRenderer
+            <DataRenderer<Tag & { count?: number }>
               data={tags}
               empty={EMPTY_TAGS}
               success={userTopTagsSuccess}
