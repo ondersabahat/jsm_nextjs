@@ -27,6 +27,14 @@ export const EMPTY_QUESTION = {
   },
 };
 
+export const EMPTY_JOBS = {
+  title: "No Jobs Found",
+  message: "The job board is empty. Maybe it’s waiting for your brilliant job to get things rolling",
+  button: {
+    text: "Find a Job",
+    href: ROUTES.JOBS,
+  },
+};
 export const EMPTY_TAGS = {
   title: "No Tags Found",
   message: "The tag cloud is empty. Add some keywords to make it rain.",
