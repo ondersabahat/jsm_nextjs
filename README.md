@@ -73,6 +73,7 @@ Before you begin, ensure you have the following installed:
    ```env
    # Authentication
    AUTH_SECRET="your-auth-secret"
+   AUTH_URL="http://localhost:3000" # For production, use your deployed URL (e.g., https://yourdomain.com)
    AUTH_GITHUB_ID="your-github-client-id"
    AUTH_GITHUB_SECRET="your-github-client-secret"
    AUTH_GOOGLE_ID="your-google-client-id"
@@ -138,6 +139,7 @@ jsm_nextjs/
 | Variable | Description | Required |
 |----------|-------------|----------|
 | `AUTH_SECRET` | Secret key for NextAuth.js | ✅ |
+| `AUTH_URL` | Base URL of your application (e.g., `https://yourdomain.com` or `http://localhost:3000` for dev) | ✅ |
 | `AUTH_GITHUB_ID` | GitHub OAuth client ID | ✅ |
 | `AUTH_GITHUB_SECRET` | GitHub OAuth client secret | ✅ |
 | `AUTH_GOOGLE_ID` | Google OAuth client ID | ✅ |
@@ -164,7 +166,20 @@ A git pre-push hook is configured to automatically run type checking before push
 1. Push your code to GitHub
 2. Import your repository in [Vercel](https://vercel.com)
 3. Add your environment variables in Vercel dashboard
-4. Deploy!
+4. **Important**: Set `AUTH_URL` to your deployed URL (e.g., `https://your-app.vercel.app`)
+5. Update OAuth provider callback URLs:
+   - **GitHub**: Add `https://your-app.vercel.app/api/auth/callback/github` to your GitHub OAuth app settings
+   - **Google**: Add `https://your-app.vercel.app/api/auth/callback/google` to your Google OAuth credentials
+6. Deploy!
+
+### OAuth Callback URLs
+
+When deploying, make sure to add these callback URLs to your OAuth providers:
+
+- **GitHub OAuth App**: `https://your-domain.com/api/auth/callback/github`
+- **Google OAuth**: `https://your-domain.com/api/auth/callback/google`
+
+Replace `your-domain.com` with your actual deployed domain.
 
 ### Other Platforms
 
