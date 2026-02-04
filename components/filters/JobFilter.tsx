@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formUrlQuery } from "@/lib/url";
 
-import LocalSearch from "../search/LocalSearch";
+import LocalSearch from "@/components/search/LocalSearch";
 
 interface JobsFilterProps {
   countriesList: Country[];
