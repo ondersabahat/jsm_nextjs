@@ -21,7 +21,6 @@ interface Question {
   downvotes: number;
   answers: number;
   views: number;
-  createdAt: Date;
 }
 
 type ActionResponse<T = null> = {
@@ -62,18 +61,6 @@ interface Answer {
   downvotes: number;
   question: string;
 }
-
-type User = {
-  _id: string;
-  name: string;
-  username: string;
-  email: string;
-  bio?: string;
-  image?: string;
-  location?: string;
-  portfolio?: string;
-  reputation?: number;
-};
 
 interface Collection {
   _id: string;
